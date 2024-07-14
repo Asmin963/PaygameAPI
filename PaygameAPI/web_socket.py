@@ -22,7 +22,7 @@ class Socket:
         :param NEW_EVENT_HANDLERS: Список обработчиков новых событий.
         :type NEW_EVENT_HANDLERS: :obj:`List[callable]`
 
-        :param OPEN_HANDLERS: Список обработчиков открытия соединения.
+        :param OPEN_HANDLERS: Список обработчиков после аутентификации пользователя в вебсокете.
         :type OPEN_HANDLERS: :obj:`List[callable]`
 
         :param CLOSE_HANDLERS: Список обработчиков закрытия соединения.
