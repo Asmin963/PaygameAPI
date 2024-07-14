@@ -5,7 +5,7 @@
 
 ## Получение информации об аккаунте
 
-```
+```python
 from PaygameAPI import Account, web_socket
 from PaygameAPI.common.events import NewMessageEvent
 from PaygameAPI.common import enums
@@ -19,7 +19,7 @@ print(f'Продажи - {acc.me.sales}')
 ```
 
 ## Автоответ на сообщение
-```
+```python
 from PaygameAPI.common.events import NewMessageEvent
 from PaygameAPI.common import enums
 
