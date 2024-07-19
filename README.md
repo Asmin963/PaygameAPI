@@ -23,6 +23,9 @@ print(f'Продажи - {acc.me.sales}')
 from PaygameAPI.common.events import NewMessageEvent
 from PaygameAPI.common import enums
 
+token = "тут ваш refreshToken"
+acc = Account(token)
+
 def new_message(event: NewMessageEvent):
     # если эвент - не новое сообщение, ничего не делаем
     if event.event_type != enums.EventTypes.NEW_MESSAGE.value:
