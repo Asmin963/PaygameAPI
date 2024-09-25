@@ -6,9 +6,7 @@
 ## Получение информации об аккаунте
 
 ```python
-from PaygameAPI import Account, web_socket
-from PaygameAPI.common.events import NewMessageEvent
-from PaygameAPI.common import enums
+from PaygameAPI import Account
 
 token = "тут ваш refreshToken"
 acc = Account(token)
@@ -22,6 +20,7 @@ print(f'Продажи - {acc.me.sales}')
 ```python
 from PaygameAPI.common.events import NewMessageEvent
 from PaygameAPI.common import enums
+from PaygameAPI import Account, web_socket
 
 token = "тут ваш refreshToken"
 acc = Account(token)
