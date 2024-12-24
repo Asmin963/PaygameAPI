@@ -1,8 +1,7 @@
-from enum import Enum
 from typing import Dict, Any
 
 
-class EventTypes(Enum):
+class EventTypes:
     """
     Класс описывающий типы событий
     """
@@ -35,7 +34,7 @@ class EventTypes(Enum):
             return "unknown"
 
 
-class ORDER_STATES(Enum):
+class ORDER_STATES:
     """
     Класс описывающий состояния заказов
     """
@@ -84,7 +83,7 @@ class ORDER_STATES(Enum):
         return states.get(state_value, "unknown")
 
     def __str__(self):
-        return self.state_name(self.value)
+        return self.state_name(self)
 
 
 class NotificationTypes:

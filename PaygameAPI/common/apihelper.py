@@ -3,13 +3,14 @@ from typing import Any, Dict, Literal, Optional, Union
 
 from . import enums
 from ..types import API_Methods
-import requests
+import cloudscraper
 from requests import Response
 
 from .exceptions import UnauthorizedError, RequestFailedError, IncorrectRequest
 
 API_URL_V1 = API_Methods.url_v1
 
+session = cloudscraper.create_scraper()
 
 def _make_request(request_method: Literal["post", "get", "patch"], api_method: str, headers: Dict[str, str] = None,
                   payload: Any = None, requests_delay: int = 0.5, params: Dict[str, Any] = None, files: dict = None,
@@ -71,8 +72,14 @@ def _make_request(request_method: Literal["post", "get", "patch"], api_method: s
             api_method = API_URL_V1 + api_method
 
         time.sleep(requests_delay)
-        response = getattr(requests, request_method)(api_method, headers=headers, data=payload, params=params,
-                                                     timeout=timeout, files=files)
+        response = getattr(session, request_method)(
+            api_method,
+            headers=headers,
+            data=payload,
+            params=params,
+            timeout=timeout,
+            files=files
+        )
 
         if response.status_code in (403, 401):
             if attempt < max_refresh_attempts:
@@ -152,7 +159,7 @@ def upload_image(token: str, image_data: bytes) -> Response:
     return _make_request("post", "messager/media/", token=token, files=files)
 
 
-def send_msg(token: str, chat: int, message: str = None, image: str = None) -> Response:
+def send_message(token: str, chat: int, message: str = None, image: str = None) -> Response:
     """
     Отправляет сообщение в указанный чат
 

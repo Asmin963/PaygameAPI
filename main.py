@@ -1,28 +1,28 @@
-import PaygameAPI
-from PaygameAPI import Account, web_socket
-from PaygameAPI.common.events import NewMessageEvent
-from PaygameAPI.common import enums
-from pprint import pprint
+from PaygameAPI import Bot
+from PaygameAPI.common.events import NewMessageEvent, OrderStateChangeEvent
 
-token = "тут refreshToken"
-acc = Account(token)
+token = "refreshToken Here"
+bot = Bot(token)
 
-print(f"Мой ник - {acc.me.username}")
-print(f"Баланс - {acc.me.balance}")
-print(f'Продаж - {acc.me.sales}')
+print(f"Мой ник - {bot.me.username}")
+print(f"Баланс - {bot.me.balance}")
+print(f'Рейтинг - {bot.me.rating}')
 
+# обработчик новых сообщений, если в тексте есть "привет"
+@bot.message_handler(text_contains="привет")
 def new_message(event: NewMessageEvent):
-    # если эвент - не новое сообщение, ничего не делаем
-    if event.event_type != enums.EventTypes.NEW_MESSAGE.value:
-        return
     print(f"Новое сообщение в диалоге {event.message.chat_id}: {event.message.text}")
     # отправляем ответное сообщение
-    acc.send_msg(event.message.chat_id, "Привет!")
+    bot.send_message(event.message.chat_id, "Привет!")
     # выводим ник пользователя
     print(f"Ник пользователя - {event.message.sender.username}")
 
-EVENT_HANDLERS = [new_message] # список функций-обработчиков событий
+# регистрируем обработчик новых заказов
+@bot.order_handler()
+def new_order_handler(event: OrderStateChangeEvent):
+    print(f"Обнаружен новый заказ - {event.order_id}")
 
-socket = web_socket.Socket(token, EVENT_HANDLERS) # инициализируем веб-сокет
+# запускаем обработчик событий (websocket)
+bot.start()
 
-socket.run_websocket() # запускам сокет (ждем и обрабатываем события)
+
