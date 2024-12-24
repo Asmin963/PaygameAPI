@@ -3,8 +3,6 @@
 
 # Примеры использования
 
-## Получение информации об аккаунте
-
 ```python
 from PaygameAPI import Bot
 from PaygameAPI.common.events import NewMessageEvent, OrderStateChangeEvent
